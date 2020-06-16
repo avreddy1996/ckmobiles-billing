@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import GoogleLogin from "react-google-login";
 import {HashRouter as Router, Redirect} from 'react-router-dom'
+import config from "../config";
 
 function Login() {
   const [error, setError] = useState('');
@@ -11,7 +12,7 @@ function Login() {
     if(response.profileObj){
       try{
         debugger;
-        const authorisedEmails = process.env.REACT_APP_AUTHORISED_EMAILS && JSON.parse(process.env.REACT_APP_AUTHORISED_EMAILS);
+        const authorisedEmails = config.REACT_APP_AUTHORISED_EMAILS;
         if(typeof authorisedEmails === 'object'){
           if(authorisedEmails.indexOf(response.profileObj.email) !== -1){
             localStorage.setItem('profileObj', JSON.stringify(response.profileObj));
