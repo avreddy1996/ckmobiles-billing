@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "7d6c816c6660857b59a0ec1af9bc0dda",
+    "revision": "9540506c50f027c1e7c8396bc2053256",
     "url": "/ckmobiles-billing/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ckmobiles-billing/static/css/2.a2026422.chunk.css"
   },
   {
-    "revision": "8dd4664fcd977438c196",
+    "revision": "a9bef8d0aa08f2b1d1d0",
     "url": "/ckmobiles-billing/static/css/main.ab3d5471.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/ckmobiles-billing/static/js/2.df391bca.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "8dd4664fcd977438c196",
-    "url": "/ckmobiles-billing/static/js/main.9b2a1752.chunk.js"
+    "revision": "a9bef8d0aa08f2b1d1d0",
+    "url": "/ckmobiles-billing/static/js/main.bcc25a37.chunk.js"
   },
   {
     "revision": "3df5101d0842d3bf1590",
