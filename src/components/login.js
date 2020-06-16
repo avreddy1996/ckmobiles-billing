@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import GoogleLogin from "react-google-login";
-import {Redirect} from 'react-router-dom'
+import {HashRouter as Router, Redirect} from 'react-router-dom'
 
 function Login() {
   const [error, setError] = useState('');
@@ -42,7 +42,7 @@ function Login() {
     }
   },[]);
   if(!loading && loggedIn){
-    return <Redirect to={'/'} />
+    return <Router><Redirect to={'/'} /></Router>
   }
   return(
       <GoogleLogin

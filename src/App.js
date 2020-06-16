@@ -5,7 +5,7 @@ import './App.css';
 import Header from "./components/Header";
 import 'antd/dist/antd.css';
 import NewInvoice from "./components/NewInvoice";
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {HashRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {Button} from "antd";
 import InvoiceList from "./components/InvoiceList";
 import Styled from "styled-components";
@@ -47,8 +47,8 @@ function App({match}) {
     <div className="App">
       <Header user={user} logout={handleLogout}/>
       <ButtonContainer active={match.isExact}>
-        <Button type={"primary"} href={'/create'} icon={<FileAddOutlined/>} >New Invoice</Button>
-        <Button type={"primary"} href={'/list'} icon={<OrderedListOutlined />}>View Invoices List</Button>
+        <Button type={"primary"} href={'#/create'} icon={<FileAddOutlined/>} >New Invoice</Button>
+        <Button type={"primary"} href={'#/list'} icon={<OrderedListOutlined />}>View Invoices List</Button>
       </ButtonContainer>
       <Router>
         <Switch>
