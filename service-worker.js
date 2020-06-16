@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/ckmobiles-billing/precache-manifest.61fb6ce40cdf3abe38bf8271b8f8150f.js"
+  "/ckmobiles-billing/precache-manifest.cae4ef76431e6a08afdc1bfe4fe5cf6f.js"
 );
 
 self.addEventListener('message', (event) => {
