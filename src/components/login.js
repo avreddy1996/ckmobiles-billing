@@ -2,6 +2,23 @@ import React, {useEffect, useState} from "react";
 import GoogleLogin from "react-google-login";
 import {HashRouter as Router, Redirect} from 'react-router-dom'
 import config from "../config";
+import Styled from "styled-components"
+import {Typography} from "antd";
+
+const Wrapper = Styled.div`
+width: 100%;
+height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+`;
+const Title = Styled.div`
+margin: 30px 0 10px 0;
+text-align:center;
+font-size: 24px;
+font-weight: 600;
+`;
 
 function Login() {
   const [error, setError] = useState('');
@@ -46,6 +63,8 @@ function Login() {
     return <Router><Redirect to={'/'} /></Router>
   }
   return(
+      <Wrapper>
+        <Title>Welcome to Chaitanya Communication Billing Software</Title>
       <GoogleLogin
           clientId="61578438734-lgto0d73m13rjpo77b0r8copjednck0o.apps.googleusercontent.com"
           buttonText="Login"
@@ -53,6 +72,8 @@ function Login() {
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
       />
+      {error && <Typography.Text type={"danger"}>{error}</Typography.Text>}
+      </Wrapper>
   )
 }
 
