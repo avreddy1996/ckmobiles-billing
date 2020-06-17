@@ -65,14 +65,16 @@ function Login() {
   return(
       <Wrapper>
         <Title>Welcome to Chaitanya Communication Billing Software</Title>
-      <GoogleLogin
-          clientId="61578438734-lgto0d73m13rjpo77b0r8copjednck0o.apps.googleusercontent.com"
-          buttonText="Login"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-      />
-      {error && <Typography.Text type={"danger"}>{error}</Typography.Text>}
+        <GoogleLogin
+            clientId="61578438734-lgto0d73m13rjpo77b0r8copjednck0o.apps.googleusercontent.com"
+            buttonText="Login"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+        />
+        {
+          error && <Typography.Text type={"danger"}>{error}</Typography.Text>
+        }
       </Wrapper>
   )
 }
