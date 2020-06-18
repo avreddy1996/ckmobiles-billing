@@ -16,9 +16,11 @@ padding: 12px 0;
 background: #fff;
 `;
 const InvoiceWrapper = Styled.div`
+@media screen{
 width: 794px;
 height: 1123px;
 border-radius: 4px;
+}
 `;
 const Section = Styled.div`
 flex: 1 1 25%;
@@ -49,16 +51,18 @@ background-color: ${props => props.selected?'#d2f7f7':''};
 box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
 }
 `;
-
 function InvoiceList(){
   const [invoices, setInvoices] = useState([]);
   const [initLoading, setInitLoading] = useState(true);
   const [selectedInvoice, setSelectedInvoice] = useState(undefined);
+  const [selectedInvoices, setSelectedInvoices] = useState([]);
   const [lastInvoice, setLastInvoice] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dataFetchLimit = 10;
 
   useEffect(()=>{
-    db.collection('invoices').orderBy("number", "desc").limit(2).get()
+    window.matchMedia("print").addListener(function(e) {console.log(e)});
+    db.collection('invoices').orderBy("number", "desc").limit(dataFetchLimit).get()
         .then((snapshot)=>{
           setLastInvoice(snapshot.docs[snapshot.docs.length-1]);
           const data = snapshot.docs.map(doc => doc.data());
@@ -75,7 +79,7 @@ function InvoiceList(){
   const getData = () => {
     setLoading(true);
     if(lastInvoice){
-      db.collection('invoices').orderBy("number", "desc").limit(2).startAfter(lastInvoice).get()
+      db.collection('invoices').orderBy("number", "desc").limit(dataFetchLimit).startAfter(lastInvoice).get()
           .then(snapshot => {
             setLastInvoice(snapshot.docs[snapshot.docs.length-1]);
             const data = snapshot.docs.map(doc => doc.data());
@@ -94,7 +98,12 @@ function InvoiceList(){
   };
 
   const handleSelectInvocie = (index) => {
-    setSelectedInvoice(invoices[index]);
+    if(selectedInvoices.indexOf(invoices[index]) === -1){
+      setSelectedInvoices([...selectedInvoices,invoices[index]]);
+    }else{
+      selectedInvoices.splice(selectedInvoices.indexOf(invoices[index]),1);
+      setSelectedInvoices([...selectedInvoices])
+    }
   };
 
   const loadMore = !initLoading ? (
@@ -109,14 +118,14 @@ function InvoiceList(){
         loadMore={loadMore}
         dataSource={invoices}
         renderItem={(item, index)=>(
-            <ListItem selected={selectedInvoice == item} onClick={()=>handleSelectInvocie(index)}>
+            <ListItem selected={selectedInvoices.indexOf(item) !== -1} onClick={()=>handleSelectInvocie(index)}>
               <Section>
                 <Text2>Invoice No.</Text2>
                 <Text1>{item.number}</Text1>
               </Section>
               <Section>
                 <Text1>{item.buyer_name}</Text1>
-                <Text2>{item.invoice_date.toDate().toDateString()}</Text2>
+                <Text2>{item.invoice_date.toDate().toLocaleDateString()}</Text2>
               </Section>
               <Section>
                 <Text2>Invoice Amount</Text2>
@@ -128,9 +137,13 @@ function InvoiceList(){
     />
     </ListWrapper>
     {
-      selectedInvoice &&
-      <InvoiceWrapper>
-        <Invoice invoiceData={selectedInvoice} />
+      selectedInvoices.length>0 &&
+      <InvoiceWrapper id={'printarea'}>
+        {
+          selectedInvoices.map(invoice=>(
+              <Invoice invoiceData={invoice} />
+          ))
+        }
       </InvoiceWrapper>
     }
   </Wrapper>)

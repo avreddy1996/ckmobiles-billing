@@ -8,6 +8,7 @@ const StyledSheet = styled.div`
 width: 100%;
 background: #fff;
 padding: 32px;
+page-break-inside: avoid;
 @media screen {
 box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
 }
@@ -95,7 +96,7 @@ height: 60px;
 
 function Invoice({invoiceData}) {
   return (
-      <StyledSheet id={'printarea'}>
+      <StyledSheet >
         <RowItem>
           <Address>
             <Title>Chaitanya Communications</Title>
@@ -121,7 +122,7 @@ function Invoice({invoiceData}) {
           </Address>
           <InvoiceInfo>
             <Line1>Invoice No: {invoiceData.number}</Line1>
-            <Line2>Invoice Date: {invoiceData.invoice_date.toDate().toDateString()}</Line2>
+            <Line2>Invoice Date: {invoiceData.invoice_date.toDate().toLocaleDateString()}</Line2>
           </InvoiceInfo>
         </RowItem>
         <RowItem>

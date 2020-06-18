@@ -148,7 +148,17 @@ function NewInvoice() {
   useEffect(()=>{
     if(invoices[invoices.length - 1]){
       setInvoiceData({
-        ...invoiceData,
+        buyer_name: '',
+        created_at: moment(new Date()),
+        cgst: 9,
+        sgst: 9,
+        final_amount: 0,
+        item: 'JIO ETOP',
+        amount: 0,
+        invoice_date: moment(new Date()),
+        gst: '',
+        address_line_1: '',
+        address_line_2: '',
         number: invoices[invoices.length - 1].number + 1
       })
     }
@@ -185,6 +195,7 @@ function NewInvoice() {
         .then(doc => {
           console.log(doc);
           setSaving(false);
+          setInvoices([{...invoiceData}]);
           message.success('Invoice Save...')
         })
         .catch(err => {
@@ -221,7 +232,7 @@ function NewInvoice() {
           </Address>
           <InvoiceInfo>
             <Line1>Invoice No: {invoiceData.number}</Line1>
-            <Line2>Invoice Date: <DatePicker onChange={(date)=>handleKeyChange('invoice_date', date)} defaultvalue={invoiceData.invoice_date} /></Line2>
+            <Line2>Invoice Date: <DatePicker format={'DD-MM-YYYY'} onChange={(date)=>handleKeyChange('invoice_date', date)} defaultvalue={invoiceData.invoice_date} /></Line2>
           </InvoiceInfo>
         </RowItem>
         <RowItem>
