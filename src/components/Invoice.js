@@ -3,6 +3,7 @@ import LogoImg from "../images/logo.jpg";
 import Converter from "convert-rupees-into-words";
 import Sign from "../images/sign.png";
 import styled from "styled-components";
+import moment from "moment";
 
 const StyledSheet = styled.div`
 width: 100%;
@@ -122,7 +123,7 @@ function Invoice({invoiceData}) {
           </Address>
           <InvoiceInfo>
             <Line1>Invoice No: {invoiceData.number}</Line1>
-            <Line2>Invoice Date: {invoiceData.invoice_date.toDate().toLocaleDateString()}</Line2>
+            <Line2>Invoice Date: {moment(invoiceData.invoice_date.toDate()).format('DD-MM-YYYY')}</Line2>
           </InvoiceInfo>
         </RowItem>
         <RowItem>
