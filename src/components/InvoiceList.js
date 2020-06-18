@@ -3,6 +3,7 @@ import db from "../firebase";
 import {List, Button, message} from "antd";
 import Styled from "styled-components";
 import Invoice from "./Invoice";
+import moment from "moment";
 
 const Wrapper = Styled.div`
 margin: 40px;
@@ -125,7 +126,7 @@ function InvoiceList(){
               </Section>
               <Section>
                 <Text1>{item.buyer_name}</Text1>
-                <Text2>{item.invoice_date.toDate().toLocaleDateString()}</Text2>
+                <Text2>{moment(item.invoice_date.toDate()).format('DD-MM-YYYY')}</Text2>
               </Section>
               <Section>
                 <Text2>Invoice Amount</Text2>
