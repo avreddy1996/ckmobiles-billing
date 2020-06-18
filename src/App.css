@@ -41,6 +41,7 @@ html, body{
   }
   #printarea, #printarea *{
     visibility: visible;
+    color: #000000;;
   }
   #printarea{
     position: absolute;
