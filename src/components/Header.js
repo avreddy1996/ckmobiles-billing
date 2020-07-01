@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {Tooltip, Button} from 'antd';
 import {PoweroffOutlined} from '@ant-design/icons';
+import {Link} from 'react-router-dom';
 
 const StyledHeader = styled.header`
 width: 100%;
@@ -39,11 +40,11 @@ margin: 0 10px;
     white-space: nowrap;
     display: block;
 `;
-function Header({user, logout}) {
+function Header({user, logout, title}) {
   return (
       <StyledHeader>
         <h5>
-          Chaithanya Communications
+          <Link to={'/'}>{title}</Link>
         </h5>
         <UserDetails>
           <img src={user.imageUrl} alt={'avatar'} />

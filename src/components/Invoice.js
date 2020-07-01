@@ -4,6 +4,8 @@ import Converter from "convert-rupees-into-words";
 import Sign from "../images/sign.png";
 import styled from "styled-components";
 import moment from "moment";
+import {addressData} from "../helper";
+import SignCv from "../images/signcv.png";
 
 const StyledSheet = styled.div`
 width: 100%;
@@ -93,17 +95,19 @@ height: 60px;
 `;
 const SignImage = styled.img`
 height: 60px;
+display: block;
+margin: auto;
 `;
 
-function Invoice({invoiceData}) {
+function Invoice({invoiceData, id}) {
   return (
       <StyledSheet >
         <RowItem>
           <Address>
-            <Title>Chaitanya Communications</Title>
-            <Line1>#15/408-2, Near SBI ATM, Cross Road, Yerraguntla Bypass</Line1>
-            <Line2>Kamalapuram - 516289, Kadapa Dist., Andhra Pradesh</Line2>
-            <Line3>GSTIN : 37APBPH9946L1ZB</Line3>
+            <Title>{addressData[id].title}</Title>
+            <Line1>{addressData[id].address_line_1}</Line1>
+            <Line2>{addressData[id].address_line_2}</Line2>
+            <Line3>GSTIN : {addressData[id].gstin}</Line3>
           </Address>
           <Logo>
             <img src={LogoImg} alt={'logo'}/>
@@ -189,7 +193,7 @@ function Invoice({invoiceData}) {
           <p>*Payment should be made by only Cash/Debit</p>
           <p>*Goods once sold cannot be taken back</p>
           <p>*Complaints and clarifications will not be entertained after delivery</p>
-          <p>*Subject to Kamalapuram Jurisdiction only. I & O.E.</p>
+          <p>*Subject to {addressData[id].jurisdiction} Jurisdiction only. I & O.E.</p>
         </RowItem>
         <RowItem style={{alignItems: 'flex-end', paddingTop: '16px'}}>
           <BuyerSign>
@@ -197,8 +201,8 @@ function Invoice({invoiceData}) {
             Receiver's Signature
           </BuyerSign>
           <SellerSign>
-            For CHAITANYA COMMUNICATIONS
-            <SignImage src={Sign} alt={'sign'} />
+            For {addressData[id].authoratory}
+            <SignImage src={id === 'cc'?Sign:SignCv} alt={'sign'} />
             Authorise Signatory
           </SellerSign>
         </RowItem>

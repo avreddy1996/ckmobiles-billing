@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {Redirect} from 'react-router-dom';
-import logo from './logo.svg';
 import './App.css';
 import Header from "./components/Header";
 import 'antd/dist/antd.css';
-import NewInvoice from "./components/NewInvoice";
-import {HashRouter as Router, Switch, Route, Link} from "react-router-dom";
 import {Button} from "antd";
 import InvoiceList from "./components/InvoiceList";
 import Styled from "styled-components";
@@ -19,7 +16,7 @@ display: flex;
 margin: 10px;
 }
 `;
-function App({match}) {
+function Home({match}) {
   const [loggedIn,setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
@@ -44,20 +41,14 @@ function App({match}) {
   }
 
   return (
-    <div className="App">
-      <Header user={user} logout={handleLogout} title={match.params.id === 'cv'?'CV Agencies':'Chaithanya Communications'}/>
-      <ButtonContainer active={match.isExact}>
-        <Button type={"primary"} href={`#/${match.params.id}/create`} icon={<FileAddOutlined/>} >New Invoice</Button>
-        <Button type={"primary"} href={`#/${match.params.id}/list`} icon={<OrderedListOutlined />}>View Invoices List</Button>
-      </ButtonContainer>
-      <Router>
-        <Switch>
-          <Route path={'/:id/create'} component={NewInvoice} />
-          <Route path={'/:id/list'} component={InvoiceList} />
-        </Switch>
-      </Router>
-    </div>
+      <div className="App">
+        <Header user={user} logout={handleLogout}/>
+        <ButtonContainer>
+          <Button type={"primary"} href={'#/cv'} >CV Agencies</Button>
+          <Button type={"primary"} href={'#/cc'} >Chaitanya Communications</Button>
+        </ButtonContainer>
+      </div>
   );
 }
 
-export default App;
+export default Home;

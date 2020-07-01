@@ -52,7 +52,7 @@ background-color: ${props => props.selected?'#d2f7f7':''};
 box-shadow: 0 0 5px 0 rgba(0,0,0,0.1);
 }
 `;
-function InvoiceList(){
+function InvoiceList({match}){
   const [invoices, setInvoices] = useState([]);
   const [initLoading, setInitLoading] = useState(true);
   const [selectedInvoice, setSelectedInvoice] = useState(undefined);
@@ -63,7 +63,7 @@ function InvoiceList(){
 
   useEffect(()=>{
     window.matchMedia("print").addListener(function(e) {console.log(e)});
-    db.collection('invoices').orderBy("number", "desc").limit(dataFetchLimit).get()
+    db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(dataFetchLimit).get()
         .then((snapshot)=>{
           setLastInvoice(snapshot.docs[snapshot.docs.length-1]);
           const data = snapshot.docs.map(doc => doc.data());
@@ -80,7 +80,7 @@ function InvoiceList(){
   const getData = () => {
     setLoading(true);
     if(lastInvoice){
-      db.collection('invoices').orderBy("number", "desc").limit(dataFetchLimit).startAfter(lastInvoice).get()
+      db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(dataFetchLimit).startAfter(lastInvoice).get()
           .then(snapshot => {
             setLastInvoice(snapshot.docs[snapshot.docs.length-1]);
             const data = snapshot.docs.map(doc => doc.data());
@@ -142,7 +142,7 @@ function InvoiceList(){
       <InvoiceWrapper id={'printarea'}>
         {
           selectedInvoices.map(invoice=>(
-              <Invoice invoiceData={invoice} />
+              <Invoice invoiceData={invoice} id={match.params.id} />
           ))
         }
       </InvoiceWrapper>

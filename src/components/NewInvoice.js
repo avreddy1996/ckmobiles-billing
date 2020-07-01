@@ -2,12 +2,14 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import LogoImg from "../images/logo.jpg";
 import Sign from "../images/sign.png";
+import SignCv from "../images/signcv.png";
 import {Input} from "antd";
 import firebase from "firebase";
 import db from '../firebase';
 import {DatePicker, Button, message} from "antd";
 import moment from "moment";
 import Converter from "convert-rupees-into-words"
+import {addressData} from "../helper";
 
 const StyledSheet = styled.div`
 width: 100%;
@@ -98,6 +100,8 @@ height: 60px;
 `;
 const SignImage = styled.img`
 height: 60px;
+display: block;
+margin: auto;
 `;
 const ButtonRowItem = styled.div`
 margin: 16px 0;
@@ -108,14 +112,7 @@ justify-content: center;
 margin: 0 10px;
 }
 `;
-const billAddresses = [
-  {
-    party_name: 'Saketh',
-    address_line1: 'Kamalapuram',
-    address_line2: 'Kadapa - 516289'
-  }
-];
-function NewInvoice() {
+function NewInvoice({match}) {
   const [billTo, setBillTo] = useState({});
   const [invoices, setInvoices] = useState([]);
   const [invoiceData, setInvoiceData] = useState({
@@ -135,10 +132,9 @@ function NewInvoice() {
   const [saving, setSaving] = useState(false);
 
   useEffect(()=>{
-    db.collection('invoices').orderBy("created_at","desc").limit(1).get()
+    db.collection('invoices').orderBy("created_at","desc").where("org", "==", match.params.id).limit(1).get()
         .then((snapshot)=>{
           const data = snapshot.docs.map(doc => doc.data());
-          console.log(data);
           setInvoices(data);
         })
         .catch(error=>{
@@ -159,7 +155,8 @@ function NewInvoice() {
         gst: '',
         address_line_1: '',
         address_line_2: '',
-        number: invoices[invoices.length - 1].number + 1
+        number: invoices[invoices.length - 1].number + 1,
+        org: match.params.id
       })
     }
   },[invoices]);
@@ -210,10 +207,10 @@ function NewInvoice() {
       <StyledSheet id={'printarea'}>
         <RowItem>
           <Address>
-            <Title>Chaitanya Communications</Title>
-            <Line1>#15/408-2, Near SBI ATM, Cross Road, Yerraguntla Bypass</Line1>
-            <Line2>Kamalapuram - 516289, Kadapa Dist., Andhra Pradesh</Line2>
-            <Line3>GSTIN : 37APBPH9946L1ZB</Line3>
+            <Title>{addressData[match.params.id].title}</Title>
+            <Line1>{addressData[match.params.id].address_line_1}</Line1>
+            <Line2>{addressData[match.params.id].address_line_2}</Line2>
+            <Line3>GSTIN : {addressData[match.params.id].gstin}</Line3>
           </Address>
           <Logo>
             <img src={LogoImg} alt={'logo'}/>
@@ -298,7 +295,7 @@ function NewInvoice() {
           <p>*Payment should be made by only Cash/Debit</p>
           <p>*Goods once sold cannot be taken back</p>
           <p>*Complaints and clarifications will not be entertained after delivery</p>
-          <p>*Subject to Kamalapuram Jurisdiction only. I & O.E.</p>
+          <p>*Subject to {addressData[match.params.id].jurisdiction} Jurisdiction only. I & O.E.</p>
         </RowItem>
         <RowItem style={{alignItems: 'flex-end', paddingTop: '16px'}}>
           <BuyerSign>
@@ -306,8 +303,8 @@ function NewInvoice() {
             Receiver's Signature
           </BuyerSign>
           <SellerSign>
-            For CHAITANYA COMMUNICATIONS
-            <SignImage src={Sign} alt={'sign'} />
+            For {addressData[match.params.id].authoratory}
+            <SignImage src={match.params.id === 'cc'?Sign:SignCv} alt={'sign'} />
             Authorise Signatory
           </SellerSign>
         </RowItem>
