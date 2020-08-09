@@ -10,6 +10,7 @@ import {Button} from "antd";
 import InvoiceList from "./components/InvoiceList";
 import Styled from "styled-components";
 import {FileAddOutlined, OrderedListOutlined} from "@ant-design/icons";
+import AutoGenerate from "./components/AutoGenerate";
 
 const ButtonContainer = Styled.div`
 margin: ${props => props.active?'100px 0':'30px 0 20px 0'};
@@ -49,11 +50,13 @@ function App({match}) {
       <ButtonContainer active={match.isExact}>
         <Button type={"primary"} href={`#/${match.params.id}/create`} icon={<FileAddOutlined/>} >New Invoice</Button>
         <Button type={"primary"} href={`#/${match.params.id}/list`} icon={<OrderedListOutlined />}>View Invoices List</Button>
+        <Button type={"primary"} href={`#/${match.params.id}/auto`} icon={<OrderedListOutlined />}>Auto Generate Bills</Button>
       </ButtonContainer>
       <Router>
         <Switch>
           <Route path={'/:id/create'} component={NewInvoice} />
           <Route path={'/:id/list'} component={InvoiceList} />
+          <Route path={'/:id/auto'} component={AutoGenerate} />
         </Switch>
       </Router>
     </div>

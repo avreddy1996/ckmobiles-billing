@@ -1,10 +1,20 @@
 import React, {useEffect, useState} from "react";
 import db from "../firebase";
-import {List, Button, message} from "antd";
+import {List, Button, message, Checkbox, Input} from "antd";
 import Styled from "styled-components";
 import Invoice from "./Invoice";
 import moment from "moment";
-
+const MainWrapper = Styled.div`
+`;
+const HeadWrapper = Styled.div`
+margin: 40px;
+display: flex;
+align-items: center;
+&& input{
+flex-basis: 15%;
+margin-right: 20px;
+}
+`;
 const Wrapper = Styled.div`
 margin: 40px;
 display: flex;
@@ -59,11 +69,15 @@ function InvoiceList({match}){
   const [selectedInvoices, setSelectedInvoices] = useState([]);
   const [lastInvoice, setLastInvoice] = useState(null);
   const [loading, setLoading] = useState(false);
-  const dataFetchLimit = 10;
+  const [dataFetchLimit, setDataFetchLimit] = useState(10);
 
   useEffect(()=>{
-    window.matchMedia("print").addListener(function(e) {console.log(e)});
-    db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(dataFetchLimit).get()
+    fetchData()
+  },[dataFetchLimit]);
+
+  const fetchData = ()=>{
+    setInitLoading(true);
+    db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(dataFetchLimit || 1).get()
         .then((snapshot)=>{
           setLastInvoice(snapshot.docs[snapshot.docs.length-1]);
           const data = snapshot.docs.map(doc => doc.data());
@@ -75,12 +89,12 @@ function InvoiceList({match}){
           message.error('Invoices loading failed');
           setLoading(false);
         })
-  },[]);
+  };
 
   const getData = () => {
     setLoading(true);
     if(lastInvoice){
-      db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(dataFetchLimit).startAfter(lastInvoice).get()
+      db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(dataFetchLimit || 1).startAfter(lastInvoice).get()
           .then(snapshot => {
             setLastInvoice(snapshot.docs[snapshot.docs.length-1]);
             const data = snapshot.docs.map(doc => doc.data());
@@ -111,43 +125,61 @@ function InvoiceList({match}){
       <div style={{padding: '16px',textAlign: 'center'}}><Button type={"primary"} onClick={getData} loading={loading}>Load More</Button> </div>
   ):'';
 
-  return(<Wrapper>
-    <ListWrapper>
-    <List
-        loading={initLoading}
-        itemLayout="horizontal"
-        loadMore={loadMore}
-        dataSource={invoices}
-        renderItem={(item, index)=>(
-            <ListItem selected={selectedInvoices.indexOf(item) !== -1} onClick={()=>handleSelectInvocie(index)}>
-              <Section>
-                <Text2>Invoice No.</Text2>
-                <Text1>{item.number}</Text1>
-              </Section>
-              <Section>
-                <Text1>{item.buyer_name}</Text1>
-                <Text2>{moment(item.invoice_date.toDate()).format('DD-MM-YYYY')}</Text2>
-              </Section>
-              <Section>
-                <Text2>Invoice Amount</Text2>
-                <Text1>&#8377;{item.final_amount}</Text1>
-              </Section>
-
-            </ListItem>
-        )}
-    />
-    </ListWrapper>
-    {
-      selectedInvoices.length>0 &&
-      <InvoiceWrapper id={'printarea'}>
-        {
-          selectedInvoices.map(invoice=>(
-              <Invoice invoiceData={invoice} id={match.params.id} />
-          ))
-        }
-      </InvoiceWrapper>
+  const handleSelectAll = ()=>{
+    if(selectedInvoices.length === invoices.length){
+      setSelectedInvoices([])
+    }else{
+      setSelectedInvoices([...invoices])
     }
-  </Wrapper>)
+  };
+
+  return(<MainWrapper>
+    <HeadWrapper>
+      <Input type={"number"} value={dataFetchLimit} onChange={e=>{setDataFetchLimit(Number(e.target.value))}} />
+      <Checkbox indeterminate={selectedInvoices.length>0 && selectedInvoices.length !== invoices.length}
+                checked={selectedInvoices.length === invoices.length}
+                onChange={handleSelectAll}>
+        Select All
+      </Checkbox>
+    </HeadWrapper>
+    <Wrapper>
+      <ListWrapper>
+        <List
+            loading={initLoading}
+            itemLayout="horizontal"
+            loadMore={loadMore}
+            dataSource={invoices}
+            renderItem={(item, index)=>(
+                <ListItem selected={selectedInvoices.indexOf(item) !== -1} onClick={()=>handleSelectInvocie(index)}>
+                  <Section>
+                    <Text2>Invoice No.</Text2>
+                    <Text1>{item.number}</Text1>
+                  </Section>
+                  <Section>
+                    <Text1>{item.buyer_name}</Text1>
+                    <Text2>{moment(item.invoice_date.toDate()).format('DD-MM-YYYY')}</Text2>
+                  </Section>
+                  <Section>
+                    <Text2>Invoice Amount</Text2>
+                    <Text1>&#8377;{item.final_amount}</Text1>
+                  </Section>
+
+                </ListItem>
+            )}
+        />
+      </ListWrapper>
+      {
+        selectedInvoices.length>0 &&
+        <InvoiceWrapper id={'printarea'}>
+          {
+            selectedInvoices.map(invoice=>(
+                <Invoice invoiceData={invoice} id={match.params.id} />
+            ))
+          }
+        </InvoiceWrapper>
+      }
+    </Wrapper>
+  </MainWrapper>)
 }
 
 export default InvoiceList;
