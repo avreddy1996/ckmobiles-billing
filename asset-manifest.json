@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/ckmobiles-billing/static/css/main.19c240f9.chunk.css",
-    "main.js": "/ckmobiles-billing/static/js/main.fe945723.chunk.js",
-    "main.js.map": "/ckmobiles-billing/static/js/main.fe945723.chunk.js.map",
+    "main.js": "/ckmobiles-billing/static/js/main.0a25441d.chunk.js",
+    "main.js.map": "/ckmobiles-billing/static/js/main.0a25441d.chunk.js.map",
     "runtime-main.js": "/ckmobiles-billing/static/js/runtime-main.e9128a36.js",
     "runtime-main.js.map": "/ckmobiles-billing/static/js/runtime-main.e9128a36.js.map",
     "static/css/2.a2026422.chunk.css": "/ckmobiles-billing/static/css/2.a2026422.chunk.css",
-    "static/js/2.e3a7bbe5.chunk.js": "/ckmobiles-billing/static/js/2.e3a7bbe5.chunk.js",
-    "static/js/2.e3a7bbe5.chunk.js.map": "/ckmobiles-billing/static/js/2.e3a7bbe5.chunk.js.map",
+    "static/js/2.57109235.chunk.js": "/ckmobiles-billing/static/js/2.57109235.chunk.js",
+    "static/js/2.57109235.chunk.js.map": "/ckmobiles-billing/static/js/2.57109235.chunk.js.map",
     "index.html": "/ckmobiles-billing/index.html",
-    "precache-manifest.57b49a4f8dd8f31940f1395c739ad311.js": "/ckmobiles-billing/precache-manifest.57b49a4f8dd8f31940f1395c739ad311.js",
+    "precache-manifest.e96163774cd1bb87703979e45e97937e.js": "/ckmobiles-billing/precache-manifest.e96163774cd1bb87703979e45e97937e.js",
     "service-worker.js": "/ckmobiles-billing/service-worker.js",
     "static/css/2.a2026422.chunk.css.map": "/ckmobiles-billing/static/css/2.a2026422.chunk.css.map",
     "static/css/main.19c240f9.chunk.css.map": "/ckmobiles-billing/static/css/main.19c240f9.chunk.css.map",
-    "static/js/2.e3a7bbe5.chunk.js.LICENSE.txt": "/ckmobiles-billing/static/js/2.e3a7bbe5.chunk.js.LICENSE.txt",
+    "static/js/2.57109235.chunk.js.LICENSE.txt": "/ckmobiles-billing/static/js/2.57109235.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/ckmobiles-billing/static/media/logo.5d5d9eef.svg",
     "static/media/logo.jpg": "/ckmobiles-billing/static/media/logo.f17186cf.jpg",
     "static/media/sign.png": "/ckmobiles-billing/static/media/sign.994ae77a.png",
@@ -22,8 +22,8 @@
   "entrypoints": [
     "static/js/runtime-main.e9128a36.js",
     "static/css/2.a2026422.chunk.css",
-    "static/js/2.e3a7bbe5.chunk.js",
+    "static/js/2.57109235.chunk.js",
     "static/css/main.19c240f9.chunk.css",
-    "static/js/main.fe945723.chunk.js"
+    "static/js/main.0a25441d.chunk.js"
   ]
 }
