@@ -129,7 +129,7 @@ function InvoiceList({match}){
     if(selectedInvoices.length === invoices.length){
       setSelectedInvoices([])
     }else{
-      setSelectedInvoices([...invoices])
+      setSelectedInvoices([...invoices].reverse())
     }
   };
 

@@ -77,10 +77,11 @@ function AutoGenerate({match}) {
     })
   };
   useEffect(()=>{
-    // db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(100).get()
+    // db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(10).get()
     //     .then((snapshot)=>{
     //       snapshot.forEach(function(doc) {
     //         doc.ref.delete();
+    //         console.log('deleted')
     //       });
     //     });
     db.collection('invoices').orderBy("number", "desc").where("org", "==", match.params.id).limit(1).get()
